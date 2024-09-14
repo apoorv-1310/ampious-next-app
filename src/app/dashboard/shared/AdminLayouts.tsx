@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faX, faUsers, faHomeUser, faRoadCircleXmark, faDumbbell, faPerson, faPersonChalkboard, faRestroom, faDashboard } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import Link from "next/link";
-import * as logo from "../../../assets/logo.png";
 import { Divider } from "@mui/material";
 
 export default function AdminLayouts() {
