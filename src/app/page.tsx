@@ -1,5 +1,4 @@
 import { ErrorBoundary } from "next/dist/client/components/error-boundary";
-import Image from "next/image";
 
 export default function Home() {
 	return (

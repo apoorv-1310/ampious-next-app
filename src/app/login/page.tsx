@@ -5,8 +5,11 @@ import { useRouter } from "next/navigation";
 import axios, { AxiosResponse } from "axios";
 import { API_HOSTNAME } from "../../shared/constants";
 import { Button, Container, FormControl, TextField, Typography } from "@mui/material";
+import {useAppDispatch} from "@/store/store";
+import adminSlice, {login} from "@/store/slices/adminSlice";
 
-const AdminLogin = () => {
+const AdminLogin=() => {
+	const dispatch = useAppDispatch();
 	const service = axios;
 	const title = "Login";
 	const router = useRouter();
@@ -39,6 +42,7 @@ const AdminLogin = () => {
 				localStorage.setItem("user", JSON.stringify(response.data.admin));
 				localStorage.setItem("user-type", "admin");
 				localStorage.setItem("token",response.headers["authorization"]);
+				login(response.data.admin)
 				router.push('/dashboard')
 			})
 			.catch((error) => {
