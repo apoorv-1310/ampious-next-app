@@ -132,38 +132,10 @@ export default function AdminLayouts() {
 										<FontAwesomeIcon icon={faDashboard} />
 										<span className="nav_name">Dashboard</span>
 									</Link>
-									<Link href="/gym-info" className={`nav_link ${pathname === "/gym-info" ? "active" : ""}`}>
+									<Link href="/dashboard/gyms" className={`nav_link ${pathname === "/gyms" ? "active" : ""}`}>
 										<FontAwesomeIcon icon={faHomeUser} />
-										<span className="nav_name">My Gym</span>
+										<span className="nav_name">Gyms</span>
 									</Link>
-									<Link href="visitor-management" className={`nav_link ${pathname === "/visitor-management" ? "active" : ""}`}>
-										<FontAwesomeIcon icon={faRestroom} />
-										<span className="nav_name">My Vistors</span>
-									</Link>
-									<Link href="/gym-customers" className={`nav_link ${pathname === "/gym-customers" ? "active" : ""}`}>
-										<FontAwesomeIcon icon={faUsers} />
-										<span className="nav_name">Manage Customers</span>
-									</Link>
-									<Link href="/gym-membership-plan" className={`nav_link ${pathname === "/gym-membership-plan" ? "active" : ""}`}>
-										<FontAwesomeIcon icon={faRoadCircleXmark} />
-										<span className="nav_name">Membership plans</span>
-									</Link>
-									<Link href="/workout-manager" className={`nav_link ${pathname === "/workout-manager" ? "active" : ""}`}>
-										<FontAwesomeIcon icon={faDumbbell} />
-										<span className="nav_name">Workouts manager</span>
-									</Link>
-									<Link href="/staff" className={`nav_link ${pathname === "/staff" ? "active" : ""}`}>
-										<FontAwesomeIcon icon={faPerson} />
-										<span className="nav_name">Manage Staff</span>
-									</Link>
-									<Link href="/add-classes" className={`nav_link ${pathname === "/add-classes" ? "active" : ""}`}>
-										<FontAwesomeIcon icon={faPersonChalkboard} />
-										<span className="nav_name">Gym Classes</span>
-									</Link>
-									{/* <Link to="/add-edit-events" className={`nav_link ${pathname === "/add-edit-events" ? "active" : ""}`}>
-										<FontAwesomeIcon icon={faTowerBroadcast} />
-										<span className="nav_name">Events</span>
-									</Link> */}
 								</div>
 							</div>
 						</nav>
