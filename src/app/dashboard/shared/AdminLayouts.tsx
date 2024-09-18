@@ -74,7 +74,7 @@ export default function AdminLayouts() {
 							</span>
 						</div>
 					)} */}
-					<ul className="dropdown-menu dropdown-menu-end" style={{ width: "auto", padding: "0, 2rem" }} aria-labelledby="dropdownMenuButton1">
+					<ul className="hidden dropdown-menu dropdown-menu-end" style={{ width: "auto", padding: "0, 2rem" }} aria-labelledby="dropdownMenuButton1">
 						<li className="dropdown-item" onClick={logoutHandle}>
 							Log Out
 						</li>
