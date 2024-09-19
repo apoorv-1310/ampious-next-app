@@ -22,3 +22,4 @@ const adminSlice = createSlice({
 export const { login } = adminSlice.actions;
 
 export default adminSlice.reducer;
+

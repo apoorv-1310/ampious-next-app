@@ -4,33 +4,25 @@ import AdminLayouts from "./shared/AdminLayouts";
 import { ErrorBoundary } from "next/dist/client/components/error-boundary";
 import { useAppSelector } from "@/store/store";
 import { usePathname } from "next/navigation";
-import Gyms from "./gyms/page";
 import {
-  Box,
   Button,
   Container,
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   Grid,
-  Grid2,
-  Pagination,
-  Stack,
   TextField,
 } from "@mui/material";
-import {
-  DataGrid,
-  GridColDef,
-  gridPageCountSelector,
-  gridPageSelector,
-  gridPaginationSelector,
-  useGridApiContext,
-  useGridSelector,
-} from "@mui/x-data-grid";
-import { IAdminResponse, IGymOwner, IGymOwnerResponse } from "../../interfaces";
+import { GridColDef } from "@mui/x-data-grid";
+import { IGymOwner, IGymOwnerResponse } from "../../interfaces";
 import axios from "axios";
+// Mandatory CSS required by the Data Grid
+import "ag-grid-community/styles/ag-grid.css";
+// Optional Theme applied to the Data Grid
+import "ag-grid-community/styles/ag-theme-quartz.css";
+// React Data Grid Component
+import { AgGridReact } from "ag-grid-react";
 
 export const ErrorComponent = () => {
   return <h1>Error</h1>;
@@ -43,6 +35,8 @@ const AdminDashboard = ({
 }>) => {
   const pathname = usePathname();
   const [gymOwners, setGymOwners] = React.useState<IGymOwnerResponse[]>([]);
+  const [currentPage, setCurrentPage] = React.useState<number>(0);
+
   const [showAddModal, setShouldShowAddModal] = React.useState<boolean>(false);
   const [form, setForm] = React.useState<IGymOwner>({
     fname: "",
@@ -137,6 +131,29 @@ const AdminDashboard = ({
       GOs();
     });
   };
+  const [colDefs, setColDefs] = React.useState<any>([
+    { field: "_id" },
+    { field: "fname" },
+    { field: "lname" },
+    { field: "phoneNo" },
+    { field: "email" },
+    { field: "createdOn" },
+    {
+      field: "Action",
+      cellRenderer: (params: any) => {
+        console.log("params", params);
+        return (
+          <Button
+            onClick={() => {
+              deleteGo(params.data._id);
+            }}
+          >
+            Delete
+          </Button>
+        );
+      },
+    },
+  ]);
 
   return (
     <ErrorBoundary errorComponent={ErrorComponent}>
@@ -150,25 +167,13 @@ const AdminDashboard = ({
         >
           Add Gym Owner
         </Button>
-        <DataGrid
-          rows={gymOwners}
-          columns={columns}
-          getRowId={(row) => {
-            return row._id;
-          }}
-          pagination={true}
-          slotProps={{
-            pagination: {
-              labelDisplayedRows: ({ from, to, count }) =>
-                `${from.toLocaleString("en")}-${to.toLocaleString("en")}`,
-            },
-            loadingOverlay: {
-              variant: "linear-progress",
-              noRowsVariant: "skeleton",
-            },
-          }}
-        />
-        <Pagination count={gymOwners.length / 10} color="primary" />
+
+        <div
+          className="ag-theme-quartz" // applying the Data Grid theme
+          style={{ height: 500 }} // the Data Grid will fill the size of the parent container
+        >
+          <AgGridReact rowData={gymOwners} columnDefs={colDefs} />
+        </div>
 
         <Dialog
           open={showAddModal}
