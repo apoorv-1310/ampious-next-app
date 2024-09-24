@@ -1,7 +1,5 @@
 "use client";
 import "../assets/layout.css";
-
-import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import ReduxProvider from "@/store/redux-provider";
@@ -22,14 +20,14 @@ export default function RootLayout({
     <ReduxProvider>
       <html lang="en">
         <head>
-          <link
+          {/* <link
             rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"
           />
           <link
             rel="stylesheet"
             href="https://unpkg.com/boxicons@latest/css/boxicons.min.css"
-          />
+          /> */}
           <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         </head>
         <body className={inter.className}>{children}</body>

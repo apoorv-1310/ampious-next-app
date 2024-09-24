@@ -1,7 +1,8 @@
 import { IAdminResponse } from "@/interfaces";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, nanoid, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: IAdminResponse = {
+	id: "",
 	_id: "",
 	fname: "",
 	lname: "",
@@ -15,11 +16,16 @@ const adminSlice = createSlice({
 	name: "admin",
 	initialState,
 	reducers: {
-		login: (state, action: PayloadAction<IAdminResponse>) => (state = action.payload)
+		login: (state, action: PayloadAction<IAdminResponse>) => {
+			console.log(action);
+			// state._id = nanoid();
+			state = action.payload;
+			console.log("state",state);
+			return state
+		},
 	},
 });
 
 export const { login } = adminSlice.actions;
 
-export default adminSlice.reducer;
-
+export default adminSlice;

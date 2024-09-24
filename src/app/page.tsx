@@ -1,18 +1,34 @@
 "use client";
 import * as React from "react";
-import { ErrorBoundary } from "next/dist/client/components/error-boundary";
 import { useRouter } from "next/navigation";
+import { login } from "@/store/slices/adminSlice";
+import { useAppDispatch, useAppSelector } from "@/store/store";
+import { addToken } from "@/store/slices/tokenSlice";
 
 export default function Home() {
-  const router = useRouter();
+	const router = useRouter();
+	const dispatch = useAppDispatch();
 
-  React.useEffect(()=>{
-	router.push('/login')
-  },[])
+	const checkAuth = async () => {
+		const user = await localStorage.getItem("user");
+		const token = await localStorage.getItem("token");
+		console.log("user", user);
+		console.log("token", token);
 
-  // return (
-  // 	<ErrorBoundary errorComponent={undefined}>
-  // 		<h1>aaa</h1>
-  // 	</ErrorBoundary>
-  // );
+		if (user && token) {
+			dispatch(login(JSON.parse(user)));
+			dispatch(addToken(token));
+			router.push("/dashboard");
+		} else {
+			router.replace("/login");
+		}
+	};
+
+	React.useLayoutEffect(() => {
+		checkAuth();
+	}, []);
+
+	React.useEffect(() => {
+		checkAuth();
+	},[]);
 }

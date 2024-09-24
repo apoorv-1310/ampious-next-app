@@ -37,10 +37,10 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 // CICD 
 // Redux
-// AG-Grid
+// AG-Grid - done
 // Load balancer - session shared
-// JWT token
-// Guards
+// JWT token - done, added in headers in all 
+// Guards - done
 // back button
 // No global loader
 // Documentation

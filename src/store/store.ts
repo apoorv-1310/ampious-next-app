@@ -1,8 +1,10 @@
-import { combineReducers, combineSlices, configureStore } from "@reduxjs/toolkit";
+import { combineSlices, configureStore } from "@reduxjs/toolkit";
 import { useDispatch, TypedUseSelectorHook, useSelector } from "react-redux";
-import adminSlice, {login} from "./slices/adminSlice";
+import adminSlice from "./slices/adminSlice";
+import tokenSlice from "./slices/tokenSlice";
+import loaderSlice from "./slices/loaderSlice";
 
-const rootReducer = combineReducers(login);
+const rootReducer = combineSlices(adminSlice, tokenSlice,loaderSlice);
 
 export const store = configureStore({
 	reducer: rootReducer,
@@ -13,4 +15,4 @@ export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
 export const useAppDispatch = () => useDispatch<AppDispatch>();
-export const useAppSelector: TypedUseSelectorHook<RootState>=useSelector;
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;

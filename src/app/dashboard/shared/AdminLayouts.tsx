@@ -5,13 +5,20 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faX, faUsers, faHomeUser, faRoadCircleXmark, faDumbbell, faPerson, faPersonChalkboard, faRestroom, faDashboard } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import Link from "next/link";
-import { Divider } from "@mui/material";
+import { CircularProgress, Dialog, Divider } from "@mui/material";
+import { useAppSelector } from "@/store/store";
 
 export default function AdminLayouts() {
 	const pathname = window.location.pathname;
 	const [headerToggle, setHeaderToggle] = useState(false);
 	const [sidebar, setSidebar] = useState<boolean>(false);
 	const [headerNavManu, setheaderNavManu] = useState(true);
+	const showLoader = useAppSelector((state) => state).loader.showLoader;
+	const [isLoaderVisible, setIsLoaderVisible] = React.useState<boolean>(false);
+
+	React.useEffect(() => {
+		setIsLoaderVisible(showLoader);
+	}, [showLoader]);
 
 	useEffect(() => {
 		if (pathname.includes("public")) {
@@ -57,6 +64,11 @@ export default function AdminLayouts() {
 
 	return (
 		<div className="">
+			{isLoaderVisible && (
+				<Dialog open={true}>
+					<CircularProgress />
+				</Dialog>
+			)}
 			<div className={!sidebar ? "d-none" : ""}>
 				<header className="header mb-4 dropdown" id="header">
 					<div onClick={headerTogglehandle} className="header_toggle" id="header-toggle">

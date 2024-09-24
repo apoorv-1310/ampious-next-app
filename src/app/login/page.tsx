@@ -1,18 +1,28 @@
-"use client"; // This is a client component 👈🏽
+"use client";
 
 import * as React from "react";
 import { useRouter } from "next/navigation";
 import axios, { AxiosResponse } from "axios";
 import { API_HOSTNAME } from "../../shared/constants";
 import { Button, Container, FormControl, TextField, Typography } from "@mui/material";
-import {useAppDispatch} from "@/store/store";
-import adminSlice, {login} from "@/store/slices/adminSlice";
+import { useAppDispatch, useAppSelector } from "@/store/store";
+import { login } from "@/store/slices/adminSlice";
+import { addToken } from "@/store/slices/tokenSlice";
+import {showLoader} from "@/store/slices/loaderSlice";
 
-const AdminLogin=() => {
+const AdminLogin = () => {
 	const dispatch = useAppDispatch();
 	const service = axios;
 	const title = "Login";
 	const router = useRouter();
+
+	const admin = useAppSelector((state) => state).admin;
+
+	React.useEffect(() => {
+		if (admin) {
+			router.push("/dashboard");
+		}
+	}, [admin]);
 
 	const [form, setForm] = React.useState({
 		email: "",
@@ -32,7 +42,6 @@ const AdminLogin=() => {
 		if (!form.email || !form.password) {
 			// Swal.fire("Login Error", "Please Enter correct Email and password", "error");
 		}
-		service;
 		service
 			.post(`${API_HOSTNAME}/admin/login`, {
 				email: form.email,
@@ -41,9 +50,13 @@ const AdminLogin=() => {
 			.then((response: AxiosResponse) => {
 				localStorage.setItem("user", JSON.stringify(response.data.admin));
 				localStorage.setItem("user-type", "admin");
-				localStorage.setItem("token",response.headers["authorization"]);
-				login(response.data.admin)
-				router.push('/dashboard')
+				localStorage.setItem("token", response.headers["authorization"]);
+				dispatch(login(response.data.admin));
+				if(response&&response.headers&&response.headers.getAuthorization) {
+					// @ts-ignore
+					axios.defaults.headers["authorization"] = response.headers.getAuthorization;
+					dispatch(addToken(response.headers.getAuthorization.toString()));
+				}
 			})
 			.catch((error) => {
 				// Swal.fire("Login Error", "Please Enter correct Email and password", "error");

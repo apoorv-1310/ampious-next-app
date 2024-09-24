@@ -1,11 +1,13 @@
+"use client";
 import {Container} from "@mui/material";
+import AdminLayouts from "../shared/AdminLayouts";
 
 const Gyms = () => {
-
 	return (
-        <Container>
-            <h1>gyms</h1>
-        </Container>
+		<Container>
+			<AdminLayouts />
+			<h1>gyms</h1>
+		</Container>
 	);
 };
 
